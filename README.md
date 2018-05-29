@@ -14,7 +14,7 @@ go get -u github.com/emitter-io/address
 
 ## API Documentation
 
-For full API documentation, please refer to our [godoc.org/github.com/emitter-io/address]https://godoc.org/github.com/emitter-io/address which contains all of the methods that package exposes.
+For full API documentation, please refer to our [godoc.org/github.com/emitter-io/address](https://godoc.org/github.com/emitter-io/address) which contains all of the methods that package exposes.
 
 ## Parsing IP Addresses
 
