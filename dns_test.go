@@ -30,8 +30,16 @@ func TestResolve(t *testing.T) {
 		{addr: "https://gooo:oogle.com", err: true},
 		{addr: "https://google.com:xxx", err: true},
 		{addr: "https-----:// ://--", err: true},
+		{addr: "::"},
+		{addr: ":::", err: true},
+		{addr: "::::::::", err: true},
 	}
 
+	/*{url: "http://google.com/123", ok: true},
+	{url: "google.com/123", ok: false},
+	{url: "235235", ok: false},
+	{url: "::", ok: false},
+	*/
 	for _, tc := range tests {
 		t.Run(tc.addr, func(*testing.T) {
 			println("resolving " + tc.addr)
