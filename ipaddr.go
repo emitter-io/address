@@ -30,24 +30,40 @@ func Parse(addr string, defaultPort int) (*net.TCPAddr, error) {
 	// Convenience: set private address
 	if strings.Contains(addr, "private") {
 		private := GetPrivateOrDefault(Loopback)
-		addr = strings.Replace(addr, "private", private.String(), 1)
+		if private.IP.To4() == nil && strings.Contains(addr, ":") {
+			addr = strings.Replace(addr, "private", fmt.Sprintf("[%v]", private.String()), 1)
+		} else {
+			addr = strings.Replace(addr, "private", private.String(), 1)
+		}
 	}
 
 	// Convenience: set public address
 	if strings.Contains(addr, "external") {
 		external := GetExternalOrDefault(Loopback)
-		addr = strings.Replace(addr, "external", external.String(), 1)
+		if external.IP.To4() == nil && strings.Contains(addr, ":") {
+			addr = strings.Replace(addr, "external", fmt.Sprintf("[%v]", external.String()), 1)
+		} else {
+			addr = strings.Replace(addr, "external", external.String(), 1)
+		}
 	}
 
 	// Convenience: set public address
 	if strings.Contains(addr, "public") {
 		public := GetPublicOrDefault(Loopback)
-		addr = strings.Replace(addr, "public", public.String(), 1)
+		if public.IP.To4() == nil && strings.Contains(addr, ":") {
+			addr = strings.Replace(addr, "public", fmt.Sprintf("[%v]", public.String()), 1)
+		} else {
+			addr = strings.Replace(addr, "public", public.String(), 1)
+		}
 	}
 
 	// If we have only an IP address, use the default port
 	if ip := net.ParseIP(addr); ip != nil {
-		addr = fmt.Sprintf("%s:%d", ip, defaultPort)
+		if ip != nil && ip.To4() == nil {
+			addr = fmt.Sprintf("[%s]:%d", ip, defaultPort)
+		} else {
+			addr = fmt.Sprintf("%s:%d", ip, defaultPort)
+		}
 	}
 
 	// Resolve the address

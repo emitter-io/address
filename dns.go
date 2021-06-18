@@ -38,7 +38,7 @@ func Resolve(name string, defaultPort int) ([]net.TCPAddr, error) {
 	}
 
 	// The hostname might not be there (if it's an address)
-	if url.Hostname() != "" {
+	if url.Hostname() != "" && url.Hostname() != "::" {
 		name = url.Hostname()
 	}
 
